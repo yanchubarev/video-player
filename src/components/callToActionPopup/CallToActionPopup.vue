@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 
 import registerPopupAnimation from "@/assets/animations/register-popup-lottie.json";
 
@@ -53,7 +53,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup() {
     return {
       registerPopupAnimation,
     };

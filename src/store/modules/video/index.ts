@@ -1,4 +1,4 @@
-import { Commit, Dispatch } from "vuex";
+import { Commit } from "vuex";
 import { VideoStoreState } from "@/store/modules/video/types";
 import { VideoInfo, VideosHistory } from "@/types/video";
 import { VideoService } from "@/services/VideoService";
@@ -50,18 +50,11 @@ export const videoModule = {
       }
       commit("SET_VIDEO_UPDATE_TIME", Date.now());
     },
-    setVideoItems(
-      { commit, state }: { commit: Commit; state: VideoStoreState },
-      videoHistory: VideosHistory
-    ) {
+    setVideoItems({ commit }: { commit: Commit }, videoHistory: VideosHistory) {
       commit("SET_VIDEO_ITEMS", videoHistory);
     },
-    async saveVideoItems(
-      {
-        commit,
-        dispatch,
-        state,
-      }: { commit: Commit; dispatch: Dispatch; state: VideoStoreState },
+    saveVideoItems(
+      { commit, state }: { commit: Commit; state: VideoStoreState },
       isLoggedIn: boolean
     ) {
       if (state.previousUpdateTime >= state.videoHistory.updateTime) {

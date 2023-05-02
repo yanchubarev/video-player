@@ -71,14 +71,15 @@ export default defineComponent({
     const store = useStore();
 
     const togglePlay = () => {
-      if (videoPlayer.value) {
-        if (isPlaying.value) {
-          videoPlayer.value.pause();
-        } else {
-          videoPlayer.value.play();
-        }
-        isPlaying.value = !isPlaying.value;
+      if (!videoPlayer.value) {
+        return;
       }
+      if (isPlaying.value) {
+        videoPlayer.value.pause();
+      } else {
+        videoPlayer.value.play();
+      }
+      isPlaying.value = !isPlaying.value;
     };
 
     const triggerSaveProgress = () => {

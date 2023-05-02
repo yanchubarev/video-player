@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent } from "vue";
 import VideoPlayer from "@/components/videoPlayer/VideoPlayer.vue";
 import timerVideo from "@/assets/video/timer.mp4";
 import { useStore } from "vuex";
@@ -36,8 +36,8 @@ export default defineComponent({
     const isUserLoggedIn = computed(() => store.getters.user.isLoggedIn);
     const videoId = "qwerty";
 
-    const handleSaveProgress = async () => {
-      await store.dispatch("saveVideoItems", isUserLoggedIn.value);
+    const handleSaveProgress = () => {
+      store.dispatch("saveVideoItems", isUserLoggedIn.value);
     };
 
     const handleLogOut = () => {

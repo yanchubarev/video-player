@@ -1,4 +1,4 @@
-import { Commit, Dispatch } from "vuex";
+import { Commit } from "vuex";
 import { UserStoreState } from "@/store/modules/user/types";
 import { User } from "@/types/user";
 import { UserService } from "@/services/UserService";
@@ -51,10 +51,7 @@ export const userModule = {
       commit("USER_LOG_OUT");
     },
 
-    async setUserInfo(
-      { commit, state }: { commit: Commit; state: UserStoreState },
-      user: User
-    ) {
+    async setUserInfo({ commit }: { commit: Commit }, user: User) {
       try {
         commit("SET_USER", user);
       } catch (error) {

@@ -45,8 +45,8 @@ export default defineComponent({
     const videoId = "qwerty";
     const router = useRouter();
 
-    const handleSaveProgress = async () => {
-      await store.dispatch("saveVideoItems", isUserLoggedIn.value);
+    const handleSaveProgress = () => {
+      store.dispatch("saveVideoItems", isUserLoggedIn.value);
     };
 
     const maxVideoDuration = computed(() => {

@@ -4,7 +4,6 @@ import { UserService } from "@/services/UserService";
 import { User } from "@/types/user";
 import { VideoService } from "@/services/VideoService";
 import { VideosHistory } from "@/types/video";
-import router from "@/router";
 
 const UPDATE_INTERVAL_TIME = 10000;
 
@@ -12,30 +11,30 @@ export const appStatePlugin = (): ((store: Store<RootState>) => void) => {
   const userService = new UserService();
   const videoService = new VideoService();
   return async (store: Store<RootState>) => {
-    const setInitialUser = (): User => {
+    const getInitialUser = (): User => {
       return {
         id: "123",
         isLoggedIn: false,
       };
     };
-    const setInitialVideoHistory = (): VideosHistory => {
+    const getInitialVideoHistory = (): VideosHistory => {
       return {
         items: [],
         updateTime: 0,
       };
     };
 
-    const loadUserInfo = async () => {
+    const loadAppInfo = async () => {
       try {
         let userInfo = await userService.getUserInfo();
         if (!userInfo) {
-          userInfo = setInitialUser();
+          userInfo = getInitialUser();
           await userService.setUserInfo(userInfo);
         }
         await store.dispatch("setUserInfo", userInfo);
         let videoHistory = videoService.getVideosHistory(userInfo.isLoggedIn);
         if (!videoHistory) {
-          videoHistory = setInitialVideoHistory();
+          videoHistory = getInitialVideoHistory();
           await videoService.setVideosHistory(
             userInfo.isLoggedIn,
             videoHistory
@@ -47,21 +46,21 @@ export const appStatePlugin = (): ((store: Store<RootState>) => void) => {
       }
     };
 
-    await loadUserInfo();
+    await loadAppInfo();
 
-    const saveInterval = setInterval(async () => {
+    setInterval(() => {
       const userInfo = userService.getUserInfo();
-      await store.dispatch("saveVideoItems", userInfo.isLoggedIn);
+      store.dispatch("saveVideoItems", userInfo.isLoggedIn);
     }, UPDATE_INTERVAL_TIME);
 
-    store.subscribe(async (payload: any, store: any) => {
+    store.subscribe(async (payload: any) => {
       const { type } = payload;
       if (type === "USER_LOG_IN") {
-        await loadUserInfo();
+        await loadAppInfo();
       }
 
       if (type === "USER_LOG_OUT") {
-        await loadUserInfo();
+        await loadAppInfo();
       }
     });
   };
