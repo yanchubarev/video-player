@@ -55,7 +55,7 @@ export const userModule = {
       try {
         commit("SET_USER", user);
       } catch (error) {
-        console.log("error");
+        console.log(error);
       }
     },
   },
